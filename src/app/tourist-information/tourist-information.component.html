@@ -1,0 +1,14 @@
+<header>
+  <h1>Tourist Information</h1>
+  <input type="text" [(ngModel)]="query" placeholder="Search..." />
+</header>
+<div class="feed">
+  <div
+    class="location-item"
+    *ngFor="let location of locationsData | filter : query"
+  >
+    <h2>{{ location.name }}</h2>
+    <p>{{ location.description }}</p>
+    <p>Rating: {{ location.rating }}</p>
+  </div>
+</div>
