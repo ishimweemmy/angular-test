@@ -1,14 +1,43 @@
 <header>
-  <h1>Tourist Information</h1>
-  <input type="text" [(ngModel)]="query" placeholder="Search..." />
+  <div>
+    <h1>{{ "tourist-information.heading" | translate }}</h1>
+    <button (click)="useTranslate('en')">English</button>
+    <button (click)="useTranslate('de')">German</button>
+    <button (click)="useTranslate('fr')">Francais</button>
+  </div>
+  <input
+    type="text"
+    [(ngModel)]="query"
+    [placeholder]="'tourist-information.placeholder' | translate"
+  />
 </header>
 <div class="feed">
   <div
     class="location-item"
-    *ngFor="let location of locationsData | filter : query"
+    *ngFor="
+      let location of locationsData | filter : query;
+      let indexOfElement = index
+    "
   >
-    <h2>{{ location.name }}</h2>
-    <p>{{ location.description }}</p>
-    <p>Rating: {{ location.rating }}</p>
+    <img
+      [src]="'https://picsum.photos/' + indexOfElement * 10"
+      alt="{{ location[0] }}"
+      width="200"
+      height="150"
+    />
+    <h2>{{ "tourist-information.name" | translate }} {{ location[0] }}</h2>
+    <p>
+      <b>{{ "tourist-information.branding" | translate }}</b>
+      {{ location[1].branding }}
+    </p>
+    <p>
+      <b>{{ "tourist-information.countryCode" | translate }}</b>
+      {{ location[1].countryCode }}
+    </p>
+    <p>
+      <b>{{ "tourist-information.f_enabled" | translate }}</b>
+      {{ location[1].flightsEnabled }}
+    </p>
   </div>
 </div>
+<div *ngIf="loading" class="loading-indicator">Loading...</div>
